@@ -1,0 +1,52 @@
+$primaryColor: #2E112D;
+$secondaryColor: #540032;
+$tertiaryColor: #820333;
+$highlightColor: #C9283E;
+$specularColor: #F07D37;
+
+*{
+	margin:0;
+	padding:0;
+}
+html,body{
+	height:100%;
+  background: $primaryColor;
+}
+
+.wrapper{
+  margin:auto;
+  height:100%;
+  width:80%;
+
+  background:$secondaryColor;
+}
+
+.playfield{
+  // height:20%;
+  width:50%;
+  background:$specularColor;
+}
+.playfield:before{
+  content:"";
+  display:block;
+  padding-top:100%;
+}
+
+.board{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+}
+
+.board div{
+  width:100%;
+  height:100%;
+}
+
+.flex-center{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
