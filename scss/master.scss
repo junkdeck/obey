@@ -22,14 +22,16 @@ html,body{
 }
 
 .playfield{
-  // height:20%;
   width:50%;
   background:$specularColor;
 }
 .playfield:before{
+  // aspect ratio hack, gets height from width of .playfield
   content:"";
   display:block;
   padding-top:100%;
+
+	opacity:1;
 }
 
 .board{
