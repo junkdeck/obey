@@ -22,15 +22,16 @@ html,body{
 }
 
 .playfield{
+	display:block;
+	position:relative;
   width:50%;
-  background:$specularColor;
+  // background:$specularColor;
 }
 .playfield:before{
   // aspect ratio hack, gets height from width of .playfield
   content:"";
   display:block;
   padding-top:100%;
-
 	opacity:1;
 }
 
@@ -40,15 +41,95 @@ html,body{
   left:0;
   right:0;
   bottom:0;
+
+	flex-direction: column;
 }
 
 .board div{
-  width:100%;
-  height:100%;
+	width:50%;
+}
+
+.row{
+	width:100%;
+}
+
+.row .op_button{
+	// display:block;
+	height:20px;
+	width:20px;
+	padding: 50px;
+}
+
+.op_button{
+	position:relative;
+	background: $highlightColor;
+	color: $secondaryColor;
+	font-size: 24pt;
+	font-weight:bold;
+	transition:35ms ease-in;
+
+	top:0px;
+	box-shadow: 0px 20px 0 0px $tertiaryColor;
+}
+.op_button:active{
+	top:20px;
+	box-shadow: 0px 0px 0 0px $tertiaryColor;
+}
+.op_button_jQActive{
+	animation: cpu_push 250ms 1;
+}
+.row2 .op_button{
+	width:10px;
+	flex-grow:1;
+}
+
+.row2 .obey{
+	font-size: 36pt;
+	font-family: monospace;
+	// letter-spacing: -10pt;
+
+	overflow: hidden;
+	position:relative;
+	top:0;
+
+	border-radius: 50%;
+
+	height:20px;
+	width:20px;
+	padding:60px;
+	// flex-grow:2;
+
+	background:$specularColor;
+	color: $secondaryColor;
+	box-shadow: 0 20px 0 0 darken($specularColor,15%);
+
+	transition:35ms ease-in;
+}
+
+.obey:active{
+	top:20px;
+	box-shadow: 0 0 0 0 $highlightColor;
 }
 
 .flex-center{
   display:flex;
   align-items: center;
   justify-content: center;
+}
+
+@keyframes cpu_push{
+	0%{
+		top:0px;
+		box-shadow: 0px 20px 0 0px $tertiaryColor;
+	}
+
+	50%{
+		top:20px;
+		box-shadow: 0px 0px 0 0px $tertiaryColor;
+	}
+
+	100%{
+		top:0px;
+		box-shadow: 0px 20px 0 0px $tertiaryColor;
+	}
 }
