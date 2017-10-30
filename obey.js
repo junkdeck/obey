@@ -40,13 +40,14 @@ var beepSeq = []; // array holding sequence steps
 var userSeq = []; // array holding the user sequence answer
 var step = 0; // current step of array
 
-var gameRunning = 0;
-var gameStarted = 0;
+var cpuRunning = 0;  // used to stop sequence from running, and to prevent
+                     // user from adding entries to userSeq out of turn
+var gameStarted = 0; // keeps track of when a new game is started
 
 var roundWon = 0; // keep track if player wins or not
-var userIsDone = 0;
+var userIsDone = 0; // lets the CPU know when the sequence's been filled
 
-var strictMode = 0;
+var strictMode = 0; // starts over if you fail even once
 
 function playSound(sound){
   sound.currentTime = 0;
@@ -86,7 +87,7 @@ function animationRetrigger(elm_selector, anim){
 
 function mainGameLoop(){
   // main game loop
-  if(gameRunning){
+  if(cpuRunning){
     if(!gameStarted){
       // start a new sequence when game is started for the first time
       addToSeq(beepSeq,getRandInt(0,3)+1);
@@ -98,8 +99,7 @@ function mainGameLoop(){
       animationRetrigger("op_obey", "obey_button_jQActive");
       playSound(sfxObey);
       step = 0; // reset step for next run
-      // clearInterval(gameLoopInterval);
-      gameRunning = toggle(gameRunning);
+      cpuRunning = toggle(cpuRunning);  // toggles the game state
     } else{
       // sequence running
       animationRetrigger("op"+beepSeq[step], "op_button_jQActive");
@@ -119,7 +119,7 @@ function mainGameLoop(){
       userIsDone = 0;
       beepSeq = [];
       userSeq = [];
-      gameRunning = 0;
+      cpuRunning = 0;
       gameStarted = 0;
       return 0;
     }else if(beepSeq.length < maxSequenceLength && roundWon){
@@ -135,46 +135,49 @@ function mainGameLoop(){
     console.log("EMPTYING USER SEQUENCE");
     userSeq = []; // empty user sequence for next round
     setTimeout(function(){
-      // makes sure 850 ms passes before game starts again
+      // adds a little delay so you don't miss the first step of next sequence
       console.log("TOGGLING GAME STATE");
-      gameRunning = toggle(gameRunning);
+      cpuRunning = toggle(cpuRunning);
       roundWon = 0;
-    }, 850);
+    }, 200);
     userIsDone = toggle(userIsDone);
   }
 }
 
 mainGameLoop(); // fires the main gameloop once, then every nth delay as per setInterval
-var gameLoopInterval = setInterval(mainGameLoop,850);  // run the game loop every 1.25 seconds
+var gameLoopInterval = setInterval(mainGameLoop,750);  // run the game loop every 1.25 seconds
 
 $(document).on('mousedown', '.op_button', function(){
-  
   // checks what button the user clicked
+  let userValue = parseInt($(this).attr('id')[2],10);
+  playSound(sfxOp[userValue]);
   // detects the dynamically generated elements from animation retrigger
-  if(gameStarted && !userIsDone){
-    // only register presses if the game's actually in progress
-    let userValue = parseInt($(this).attr('id')[2],10);
+  if(gameStarted && !cpuRunning){
+    // only register presses if the game's actually in progress AND it's the users turn
     addToSeq(userSeq, userValue);
     if(userSeq.length == beepSeq.length){
       console.log("user sequence: "+userSeq);
       console.log("cpu sequence: "+beepSeq);
       // check if the answer is the correct sequence
-      if(compareSeq(beepSeq, userSeq)){
-        playSound(sfxCorrect);
-        roundWon = 1;
-        console.log("CORRECT SEQUENCE");
-      }else{
-        playSound(sfxWrong);
-        roundWon = 0;
-        console.log("WRONG SEQUENCE");
-      }
-      userIsDone = toggle(userIsDone);
+      setTimeout(function(){
+        // tiny little timeout so the two sounds dont play on top of each other
+        if(compareSeq(beepSeq, userSeq)){
+          playSound(sfxCorrect);
+          roundWon = 1;
+          console.log("CORRECT SEQUENCE");
+        }else{
+          playSound(sfxWrong);
+          roundWon = 0;
+          console.log("WRONG SEQUENCE");
+        }
+        userIsDone = toggle(userIsDone);
+      },150)
     }
   }
 });
 
 $(document).on('click', '.obey', function(){
-  // not sure if this should even be used. maybe to start the game?
+  // starts the game
   $(this).empty().append("OBEY");
-  gameRunning = toggle(gameRunning);
+  cpuRunning = toggle(cpuRunning);
 })
