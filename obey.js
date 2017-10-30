@@ -2,33 +2,38 @@
 var sfxCorrect = document.createElement('audio');
 var sfxWrong = document.createElement('audio');
 var sfxVictory = document.createElement('audio');
-var sfxOp1 = document.createElement('audio');
-var sfxOp2 = document.createElement('audio');
-var sfxOp3 = document.createElement('audio');
-var sfxOp4 = document.createElement('audio');
+var sfxObey = document.createElement('audio');
+var sfxOp = [];
+sfxOp[1] = document.createElement('audio');
+sfxOp[2] = document.createElement('audio');
+sfxOp[3] = document.createElement('audio');
+sfxOp[4] = document.createElement('audio');
 // SFX LOADING
 sfxCorrect.setAttribute('src','./sfx/sfxCorrect.wav');
 sfxWrong.setAttribute('src','./sfx/sfxWrong.wav');
 sfxVictory.setAttribute('src','./sfx/sfxVictory.wav');
-sfxOp1.setAttribute('src','./sfx/sfxOp1.wav');
-sfxOp2.setAttribute('src','./sfx/sfxOp2.wav');
-sfxOp3.setAttribute('src','./sfx/sfxOp3.wav');
-sfxOp4.setAttribute('src','./sfx/sfxOp4.wav');
+sfxObey.setAttribute('src','./sfx/sfxObey.wav');
+sfxOp[1].setAttribute('src','./sfx/sfxOp1.wav');
+sfxOp[2].setAttribute('src','./sfx/sfxOp2.wav');
+sfxOp[3].setAttribute('src','./sfx/sfxOp3.wav');
+sfxOp[4].setAttribute('src','./sfx/sfxOp4.wav');
 sfxCorrect.setAttribute('preload','auto');
 sfxWrong.setAttribute('preload','auto');
 sfxVictory.setAttribute('preload','auto');
-sfxOp1.setAttribute('preload','auto');
-sfxOp2.setAttribute('preload','auto');
-sfxOp3.setAttribute('preload','auto');
-sfxOp4.setAttribute('preload','auto');
+sfxObey.setAttribute('preload','auto');
+sfxOp[1].setAttribute('preload','auto');
+sfxOp[2].setAttribute('preload','auto');
+sfxOp[3].setAttribute('preload','auto');
+sfxOp[4].setAttribute('preload','auto');
 // SFX VOLUME
 sfxCorrect.volume = 0.15;
 sfxWrong.volume = 0.15;
 sfxVictory.volume = 0.15;
-sfxOp1.volume = 0.15;
-sfxOp2.volume = 0.15;
-sfxOp3.volume = 0.15;
-sfxOp4.volume = 0.15;
+sfxObey.volume = 0.15;
+sfxOp[1].volume = 0.15;
+sfxOp[2].volume = 0.15;
+sfxOp[3].volume = 0.15;
+sfxOp[4].volume = 0.15;
 
 var maxSequenceLength = 3; // the upper limit and what decides a win - set to 20
 var beepSeq = []; // array holding sequence steps
@@ -91,12 +96,14 @@ function mainGameLoop(){
     if(step >= beepSeq.length){
       // checks if the sequence is ended
       animationRetrigger("op_obey", "obey_button_jQActive");
+      playSound(sfxObey);
       step = 0; // reset step for next run
       // clearInterval(gameLoopInterval);
       gameRunning = toggle(gameRunning);
     } else{
       // sequence running
       animationRetrigger("op"+beepSeq[step], "op_button_jQActive");
+      playSound(sfxOp[beepSeq[step]]);
       console.log("current step: "+(step)+" / sequence: "+beepSeq[step]);
       step++;
     }
@@ -141,6 +148,7 @@ mainGameLoop(); // fires the main gameloop once, then every nth delay as per set
 var gameLoopInterval = setInterval(mainGameLoop,850);  // run the game loop every 1.25 seconds
 
 $(document).on('mousedown', '.op_button', function(){
+  
   // checks what button the user clicked
   // detects the dynamically generated elements from animation retrigger
   if(gameStarted && !userIsDone){
