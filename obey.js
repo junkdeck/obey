@@ -15,6 +15,8 @@ var step = 0; // current step of array
 var gameRunning = 0;
 var gameStarted = 0;
 
+var roundWon = 0; // keep track if player wins or not
+
 function playSound(sound){
   sound.currentTime = 0;
   sound.play();
@@ -82,7 +84,8 @@ mainGameLoop(); // fires the main gameloop once, then every nth delay as per set
 var gameLoopInterval = setInterval(mainGameLoop,850);  // run the game loop every 1.25 seconds
 
 $(document).on('mousedown', '.op_button', function(){
-  // supports dynamically added objects (such as the replaced buttons for anim retrigger)
+  // there's a disturbing amount of game logic in the click handler
+  // especially concerning victory and rounds
   if(gameStarted){
     // only register presses if the game's actually in progress
     let userValue = parseInt($(this).attr('id')[2],10);
@@ -92,34 +95,40 @@ $(document).on('mousedown', '.op_button', function(){
       // check if the answer is the correct sequence
       if(compareSeq(beepSeq, userSeq)){
         playSound(sfxCorrect);
+        roundWon = 1;
         console.log("CORRECT SEQUENCE");
       }else{
         playSound(sfxWrong);
+        roundWon = 0;
         console.log("WRONG SEQUENCE");
       }
-      if(beepSeq.length < maxSequenceLength){
-        // setup for next round if the final round hasn't been played
-        console.log("EMPTYING USER SEQUENCE");
-        userSeq = []; // empty user sequence for next round
-        addToSeq(beepSeq, getRandInt(0,3)+1);
-        console.log("cpu seq: "+beepSeq);
-        setTimeout(function(){
-          // makes sure 850 ms passes before game starts again
-          console.log("TOGGLING GAME STATE");
-          gameRunning = toggle(gameRunning);
-        }, 850)
-      }else if(beepSeq.length >= maxSequenceLength){
-        // final round played, notify player of victory
-        // play YOU WIN sound
+      if(beepSeq.length >= maxSequenceLength && roundWon){
+        // final round played and won, notify player of victory
+        // playSound(sfxVictory);
         console.log("YOU WIN!!!");
         // reinitialize all values
-        step = 0;
         beepSeq = [];
         userSeq = [];
         gameRunning = 0;
         gameStarted = 0;
+        return 0;
+      }else if(beepSeq.length < maxSequenceLength && roundWon){
+        // setup for next round if the final round hasn't been played
+        addToSeq(beepSeq, getRandInt(0,3)+1);
+        console.log("cpu seq: "+beepSeq);
+      }else if(!roundWon && strictMode){
+        // start all over if 'strictMode' is active
+        beepSeq = [];
       }
-      // gameRunning = toggle(gameRunning);
+      // play the round, regardless of previous round outcome
+      console.log("EMPTYING USER SEQUENCE");
+      userSeq = []; // empty user sequence for next round
+      setTimeout(function(){
+        // makes sure 850 ms passes before game starts again
+        console.log("TOGGLING GAME STATE");
+        gameRunning = toggle(gameRunning);
+        roundWon = 0;
+      }, 850)
     }
   }
 });
