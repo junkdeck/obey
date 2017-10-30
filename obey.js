@@ -7,10 +7,13 @@ $(document).ready(function(){
 
 var maxSequenceLength = 20; // the upper limit and what decides a win - set to 20
 var beepSeq = []; // array holding sequence steps
+var answerSeq = [];
 var step = 0; // current step of array
 
 var buttonElements; // placeholder for HTMLCollections so clicking buttans work
 var buttonArray;  // placeholder for Array for buttons, so foreach works
+
+var gameRunning = 0;
 
 function addToSeq(seq, num){
   seq.push(num);
@@ -26,31 +29,47 @@ function getRandInt(min,max){
   return i;
 }
 
-function mainGameLoop(){
-  // main game loop
-  if(step >= beepSeq.length){
-    // adds a new beep sequence if the current sequence is finished
-    if(beepSeq.length < maxSequenceLength){
-      // adds a new entry to the beep pattern sequence
-      addToSeq(beepSeq,getRandInt(0,3)+1);
-      console.log(beepSeq);
-    }
-    step = 0; // reset step for next run
-  }
-  console.log("current step: "+(step));
-
+function animationRetrigger(elm_selector, anim){
   // setup for animation retrigger
-  var elm = document.getElementById("op"+beepSeq[step]);
+  var elm = document.getElementById(elm_selector);  // "op"+beepSeq[step]
   var newElm = elm.cloneNode(true);
   elm.parentNode.replaceChild(newElm,elm);
   // triggers animation on corresponding entry in sequence
-  $("#op"+beepSeq[step]).addClass("op_button_jQActive");
-  step++;
+  $("#"+elm_selector).addClass(anim);  // "op_button_jQActive"
 }
 
+function mainGameLoop(){
+  // main game loop
+  if(gameRunning){
+    if(step >= beepSeq.length){
+      // checks if the sequence is ended
+      if(beepSeq.length < maxSequenceLength){
+        // adds a new beep sequence if the current sequence is finished
+        animationRetrigger("op_obey", "obey_button_jQActive");
+        addToSeq(beepSeq,getRandInt(0,3)+1);
+        console.log(beepSeq);
+      }
+      step = 0; // reset step for next run
+      // clearInterval(gameLoopInterval);
+      gameRunning = toggle(gameRunning);
+    } else{
+      // sequence running
+      console.log("current step: "+(step));
+      animationRetrigger("op"+beepSeq[step], "op_button_jQActive");
+      step++;
+    }
+  }
+}
+
+mainGameLoop(); // fires the main gameloop once, then every nth delay as per setInterval
 var gameLoopInterval = setInterval(mainGameLoop,1250);  // run the game loop every 1.25 seconds
 
 $(document).on('click', '.op_button', function(){
   // supports dynamically added objects (such as the replaced buttons for anim retrigger)
   console.log($(this).attr('id'));
 });
+
+$(document).on('click', '.obey', function(){
+  // not sure if this should even be used. maybe to start the game?
+  gameRunning = toggle(gameRunning);
+})

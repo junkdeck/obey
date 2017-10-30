@@ -4,7 +4,24 @@ $tertiaryColor: #820333;
 $highlightColor: #C9283E;
 $specularColor: #F07D37;
 
+@mixin color_keys($animationName, $color){
+	@keyframes #{$animationName}{
+		0%{
+			top:0px;
+			box-shadow: 0px 20px 0 0px #{$color};
+		}
 
+		50%{
+			top:20px;
+			box-shadow: 0px 0px 0 0px #{$color};
+		}
+
+		100%{
+			top:0px;
+			box-shadow: 0px 20px 0 0px #{$color};
+		}
+	}
+}
 
 *{
 	margin:0;
@@ -77,12 +94,8 @@ html,body{
 	top:20px;
 	box-shadow: 0px 0px 0 0px $tertiaryColor;
 }
-.op_button_jQActive{
-	animation: cpu_push 175ms 1;
-	animation-timing-function: ease-out;
-}
 
-.row2 .obey{
+.obey{
 	position:relative;
 	top:0;
 
@@ -109,7 +122,7 @@ html,body{
 
 .obey:active{
 	top:20px;
-	box-shadow: 0 0 0 0 $highlightColor;
+	box-shadow: 0 0px 0 0 darken($specularColor,15%);
 }
 
 .flex-center{
@@ -118,19 +131,15 @@ html,body{
   justify-content: center;
 }
 
-@keyframes cpu_push{
-	0%{
-		top:0px;
-		box-shadow: 0px 20px 0 0px $tertiaryColor;
-	}
+@include color_keys(cpu_push, $tertiaryColor);
+@include color_keys(cpu_obey_push, darken($specularColor,15%));
 
-	50%{
-		top:20px;
-		box-shadow: 0px 0px 0 0px $tertiaryColor;
-	}
+.op_button_jQActive{
+	animation: cpu_push 175ms 1;
+	animation-timing-function: ease-out;
+}
 
-	100%{
-		top:0px;
-		box-shadow: 0px 20px 0 0px $tertiaryColor;
-	}
+.obey_button_jQActive{
+	animation: cpu_obey_push 175ms 1;
+	animation-timing-function: ease-in;
 }
