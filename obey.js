@@ -5,9 +5,12 @@ $(document).ready(function(){
   var op4 = $('#op4');
 });
 
-var maxSequenceLength = 4; // the upper limit and what decides a win - set to 20
+var maxSequenceLength = 20; // the upper limit and what decides a win - set to 20
 var beepSeq = []; // array holding sequence steps
 var step = 0; // current step of array
+
+var buttonElements; // placeholder for HTMLCollections so clicking buttans work
+var buttonArray;  // placeholder for Array for buttons, so foreach works
 
 function addToSeq(seq, num){
   seq.push(num);
@@ -33,9 +36,7 @@ function mainGameLoop(){
       console.log(beepSeq);
     }
     step = 0; // reset step for next run
-    lastStep = null;
   }
-  lastStep = step;
   console.log("current step: "+(step));
 
   // setup for animation retrigger
@@ -49,6 +50,7 @@ function mainGameLoop(){
 
 var gameLoopInterval = setInterval(mainGameLoop,1250);  // run the game loop every 1.25 seconds
 
-$('.op_button').on("click", function(){
-  console.log($(this));
+$(document).on('click', '.op_button', function(){
+  // supports dynamically added objects (such as the replaced buttons for anim retrigger)
+  console.log($(this).attr('id'));
 });

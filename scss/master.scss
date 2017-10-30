@@ -4,6 +4,8 @@ $tertiaryColor: #820333;
 $highlightColor: #C9283E;
 $specularColor: #F07D37;
 
+
+
 *{
 	margin:0;
 	padding:0;
@@ -76,28 +78,27 @@ html,body{
 	box-shadow: 0px 0px 0 0px $tertiaryColor;
 }
 .op_button_jQActive{
-	animation: cpu_push 250ms 1;
-}
-.row2 .op_button{
-	width:10px;
-	flex-grow:1;
+	animation: cpu_push 175ms 1;
+	animation-timing-function: ease-out;
 }
 
 .row2 .obey{
-	font-size: 36pt;
-	font-family: monospace;
-	// letter-spacing: -10pt;
-
-	overflow: hidden;
 	position:relative;
 	top:0;
 
+	font-size: 36pt;
+	font-family: monospace;
+	// letter-spacing: -10pt;
+	overflow: hidden;
+
 	border-radius: 50%;
+
+	flex:0 0 20px;
 
 	height:20px;
 	width:20px;
 	padding:60px;
-	// flex-grow:2;
+	margin:5px;
 
 	background:$specularColor;
 	color: $secondaryColor;
