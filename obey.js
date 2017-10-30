@@ -1,13 +1,36 @@
+// SOUND SETUP
 var sfxCorrect = document.createElement('audio');
 var sfxWrong = document.createElement('audio');
-sfxCorrect.setAttribute('src','./sfx/user_correct.wav');
+var sfxVictory = document.createElement('audio');
+var sfxOp1 = document.createElement('audio');
+var sfxOp2 = document.createElement('audio');
+var sfxOp3 = document.createElement('audio');
+var sfxOp4 = document.createElement('audio');
+// SFX LOADING
+sfxCorrect.setAttribute('src','./sfx/sfxCorrect.wav');
+sfxWrong.setAttribute('src','./sfx/sfxWrong.wav');
+sfxVictory.setAttribute('src','./sfx/sfxVictory.wav');
+sfxOp1.setAttribute('src','./sfx/sfxOp1.wav');
+sfxOp2.setAttribute('src','./sfx/sfxOp2.wav');
+sfxOp3.setAttribute('src','./sfx/sfxOp3.wav');
+sfxOp4.setAttribute('src','./sfx/sfxOp4.wav');
 sfxCorrect.setAttribute('preload','auto');
-sfxCorrect.volume = 0.15;
-sfxWrong.setAttribute('src','./sfx/user_wrong.wav');
 sfxWrong.setAttribute('preload','auto');
+sfxVictory.setAttribute('preload','auto');
+sfxOp1.setAttribute('preload','auto');
+sfxOp2.setAttribute('preload','auto');
+sfxOp3.setAttribute('preload','auto');
+sfxOp4.setAttribute('preload','auto');
+// SFX VOLUME
+sfxCorrect.volume = 0.15;
 sfxWrong.volume = 0.15;
+sfxVictory.volume = 0.15;
+sfxOp1.volume = 0.15;
+sfxOp2.volume = 0.15;
+sfxOp3.volume = 0.15;
+sfxOp4.volume = 0.15;
 
-var maxSequenceLength = 4; // the upper limit and what decides a win - set to 20
+var maxSequenceLength = 3; // the upper limit and what decides a win - set to 20
 var beepSeq = []; // array holding sequence steps
 var userSeq = []; // array holding the user sequence answer
 var step = 0; // current step of array
@@ -67,10 +90,7 @@ function mainGameLoop(){
     }
     if(step >= beepSeq.length){
       // checks if the sequence is ended
-      if(beepSeq.length < maxSequenceLength){
-        // adds a new beep sequence if the current sequence is finished
-        animationRetrigger("op_obey", "obey_button_jQActive");
-      }
+      animationRetrigger("op_obey", "obey_button_jQActive");
       step = 0; // reset step for next run
       // clearInterval(gameLoopInterval);
       gameRunning = toggle(gameRunning);
@@ -86,7 +106,7 @@ function mainGameLoop(){
     // routine for handling user information, as well as victory conditions
     if(beepSeq.length >= maxSequenceLength && roundWon){
       // final round played and won, notify player of victory
-      // playSound(sfxVictory);
+      playSound(sfxVictory);
       console.log("YOU WIN!!!");
       // reinitialize all values for new game
       userIsDone = 0;
@@ -147,5 +167,6 @@ $(document).on('mousedown', '.op_button', function(){
 
 $(document).on('click', '.obey', function(){
   // not sure if this should even be used. maybe to start the game?
+  $(this).empty().append("OBEY");
   gameRunning = toggle(gameRunning);
 })
