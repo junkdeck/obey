@@ -35,7 +35,7 @@ sfxOp[2].volume = 0.15;
 sfxOp[3].volume = 0.15;
 sfxOp[4].volume = 0.15;
 
-var maxSequenceLength = 3; // the upper limit and what decides a win - set to 20
+var maxSequenceLength = 1; // the upper limit and what decides a win - set to 20
 var beepSeq = []; // array holding sequence steps
 var userSeq = []; // array holding the user sequence answer
 var step = 0; // current step of array
@@ -119,6 +119,10 @@ function mainGameLoop(){
       // final round played and won, notify player of victory
       playSound(sfxVictory);
       $('#op_obey').empty().append("WIN");
+      // fade away all the buttons
+      for (var i = 1; i <= 4; i++) {
+        $('#op'+i).removeClass('op-popup').addClass('op-popdown');
+      }
       // reinitialize all values for new game
       userIsDone = 0;
       beepSeq = [];
@@ -144,7 +148,7 @@ function mainGameLoop(){
       console.log("GAMESTATE TOGGLED!");
       cpuRunning = toggle(cpuRunning);
       roundWon = 0;
-    }, 200);
+    }, 250);
     userIsDone = toggle(userIsDone);
   }
 }
@@ -189,7 +193,9 @@ $(document).on('click', '.mainbutton', function(){
   // starts the game
   if(!gameStarted){
     for (var i = 1; i <= 4; i++) {
-      $('#op'+i).removeClass('no-show').addClass('op-popup');
+      console.log("ok");
+      $('#op'+i).removeClass('no-show').removeClass('op-popdown')
+      animationRetrigger(("op"+i), 'op-popup');
     }
   }
   $(this).empty().append("OBEY");
@@ -197,6 +203,6 @@ $(document).on('click', '.mainbutton', function(){
     for(var i=1;i<=4;i++){
       $('#op'+i).removeClass('op-popup').removeClass('op_button_jQPush');
     }
-    cpuRunning = toggle(cpuRunning);
-  },1050);
+    cpuRunning = 1;
+  },1300);
 })

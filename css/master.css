@@ -114,8 +114,13 @@ html, body {
   opacity: 0; }
 
 .op-popup {
-  animation: op_button_popup 1s 1;
-  animation-fill-mode: backwards; }
+  animation: op_button_popup 1250ms 1;
+  animation-fill-mode: both; }
+
+.op-popdown {
+  animation: op_button_popup 1250ms 1;
+  animation-direction: reverse;
+  animation-fill-mode: both; }
 
 .obey-correct {
   animation: obey_correct 500ms 1; }
@@ -131,13 +136,13 @@ html, body {
     margin: 60px;
     opacity: 1;
     box-shadow: 0px 0px 0 0px #820333; }
-  50% {
+  25% {
     top: 20px;
     height: 5px;
     padding: 0 50px;
     margin: 57px 0;
     box-shadow: 0px 0px 0 0px #820333; }
-  85% {
+  65% {
     top: 20px;
     height: 20px;
     padding: 50px;

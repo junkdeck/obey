@@ -160,8 +160,13 @@ html,body{
 }
 
 .op-popup{
-	animation: op_button_popup 1s 1;
-	animation-fill-mode: backwards;
+	animation: op_button_popup 1250ms 1;
+	animation-fill-mode: both;
+}
+.op-popdown{
+	animation: op_button_popup 1250ms 1;
+	animation-direction: reverse;
+	animation-fill-mode: both;
 }
 
 .obey-correct{
@@ -181,14 +186,14 @@ html,body{
 		opacity:1;
 		box-shadow: 0px 0px 0 0px $tertiaryColor;
 	}
-	50%{
+	25%{
 		top:20px;
 		height:5px;
 		padding: 0 50px;
 		margin: 57px 0;
 		box-shadow: 0px 0px 0 0px $tertiaryColor;
 	}
-	85%{
+	65%{
 		top:20px;
 		height:20px;
 		padding: 50px;
