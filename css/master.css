@@ -1,4 +1,7 @@
-::selection, ::-moz-selection {
+::selection {
+  background: transparent; }
+
+::-moz-selection {
   background: transparent; }
 
 * {
@@ -90,9 +93,12 @@ html, body {
   0% {
     top: 0px;
     box-shadow: 0px 20px 0 0px #820333; }
-  50% {
+  12% {
     top: 20px;
     box-shadow: 0px 0px 0 0px #820333; }
+  60% {
+    top: 18px;
+    box-shadow: 0px 2px 0 0px #820333; }
   100% {
     top: 0px;
     box-shadow: 0px 20px 0 0px #820333; } }
@@ -100,15 +106,18 @@ html, body {
   0% {
     top: 0px;
     box-shadow: 0px 20px 0 0px #cb560f; }
-  50% {
+  12% {
     top: 20px;
     box-shadow: 0px 0px 0 0px #cb560f; }
+  60% {
+    top: 18px;
+    box-shadow: 0px 2px 0 0px #cb560f; }
   100% {
     top: 0px;
     box-shadow: 0px 20px 0 0px #cb560f; } }
 .op_button_jQPush {
-  animation: cpu_push 175ms 1;
-  animation-timing-function: ease-out; }
+  animation: cpu_push 250ms 1;
+  animation-timing-function: ease; }
 
 .obey_button_jQPush {
   animation: cpu_obey_push 175ms 1;

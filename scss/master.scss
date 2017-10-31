@@ -12,9 +12,13 @@ $obeyShadow: darken($specularColor,15%);
 			box-shadow: 0px 20px 0 0px #{$color};
 		}
 
-		50%{
+		12%{
 			top:20px;
 			box-shadow: 0px 0px 0 0px #{$color};
+		}
+		60%{
+			top:18px;
+			box-shadow: 0px 2px 0 0px #{$color};
 		}
 
 		100%{
@@ -24,9 +28,8 @@ $obeyShadow: darken($specularColor,15%);
 	}
 }
 
-::selection, ::-moz-selection{
-	background:transparent;
-}
+::selection{background:transparent;}
+::-moz-selection{background:transparent;}
 
 *{
 	margin:0;
@@ -79,13 +82,6 @@ html,body{
 	width:100%;
 }
 
-// .row .op_button{
-// 	// display:block;
-// 	height:20px;
-// 	width:20px;
-// 	padding: 50px;
-// }
-
 .op_button{
 	display:flex;
 	flex:0 0 20px;
@@ -118,7 +114,7 @@ html,body{
 
 	font-size: 36pt;
 	font-family: monospace;
-	// letter-spacing: -10pt;
+
 	overflow: hidden;
 
 	border-radius: 50%;
@@ -152,8 +148,8 @@ html,body{
 @include color_keys(cpu_obey_push, $obeyShadow);
 
 .op_button_jQPush{
-	animation: cpu_push 175ms 1;
-	animation-timing-function: ease-out;
+	animation: cpu_push 250ms 1;
+	animation-timing-function: ease;
 }
 
 .obey_button_jQPush{
