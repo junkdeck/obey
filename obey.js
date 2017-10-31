@@ -35,7 +35,7 @@ sfxOp[2].volume = 0.15;
 sfxOp[3].volume = 0.15;
 sfxOp[4].volume = 0.15;
 
-var maxSequenceLength = 1; // the upper limit and what decides a win - set to 20
+var maxSequenceLength = 20; // the upper limit and what decides a win
 var beepSeq = []; // array holding sequence steps
 var userSeq = []; // array holding the user sequence answer
 var step = 0; // current step of array
@@ -129,6 +129,8 @@ function mainGameLoop(){
       userSeq = [];
       cpuRunning = 0;
       gameStarted = 0;
+
+      setTimeout(function(){$("#op_obey").empty().append('AGAIN');},1500);
       return 0;
     }else if(beepSeq.length < maxSequenceLength && roundWon){
       // setup for next round if the final round hasn't been played
@@ -193,16 +195,18 @@ $(document).on('click', '.mainbutton', function(){
   // starts the game
   if(!gameStarted){
     for (var i = 1; i <= 4; i++) {
-      console.log("ok");
+      // enables the boot animation for all 'op_button's
       $('#op'+i).removeClass('no-show').removeClass('op-popdown')
       animationRetrigger(("op"+i), 'op-popup');
     }
+    $(this).empty().append("BOOT");
+    setTimeout(function(){
+      for(var i=1;i<=4;i++){
+        // preps all 'op_button's for their animation retriggering
+        $('#op'+i).removeClass('op-popup').removeClass('op_button_jQPush');
+      }
+      cpuRunning = 1; // initiates the first cycle
+    },1300);
   }
-  $(this).empty().append("OBEY");
-  setTimeout(function(){
-    for(var i=1;i<=4;i++){
-      $('#op'+i).removeClass('op-popup').removeClass('op_button_jQPush');
-    }
-    cpuRunning = 1;
-  },1300);
+
 })

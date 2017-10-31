@@ -24,9 +24,15 @@ $obeyShadow: darken($specularColor,15%);
 	}
 }
 
+::selection, ::-moz-selection{
+	background:transparent;
+}
+
 *{
 	margin:0;
 	padding:0;
+
+	cursor:default;
 }
 html,body{
 	height:100%;
