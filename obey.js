@@ -41,7 +41,7 @@ var userSeq = []; // array holding the user sequence answer
 var step = 0; // current step of array
 
 var cpuRunning = 0;  // used to stop sequence from running, and to prevent
-                     // user from adding entries to userSeq out of turn
+// user from adding entries to userSeq out of turn
 var gameStarted = 0; // keeps track of when a new game is started
 
 var roundWon = 0; // keep track if player wins or not
@@ -82,7 +82,7 @@ function animationRetrigger(elm_selector, anim){
   var newElm = elm.cloneNode(true);
   elm.parentNode.replaceChild(newElm,elm);
   // triggers animation on corresponding entry in sequence
-  $("#"+elm_selector).addClass(anim);  // "op_button_jQActive"
+  $("#"+elm_selector).addClass(anim);  // "op_button_jQPush"
 }
 
 function mainGameLoop(){
@@ -178,14 +178,16 @@ $(document).on('mousedown', '.op_button', function(){
 
 $(document).on('click', '.obey', function(){
   // starts the game
-  for(var i=1;i<=4;i++){
-    $('#op'+i).removeClass('no-show').addClass('op-popup');
+  if(!gameStarted){
+    for (var i = 1; i <= 4; i++) {
+      $('#op'+i).removeClass('no-show').addClass('op-popup');
+    }
   }
   $(this).empty().append("OBEY");
   setTimeout(function(){
-    cpuRunning = toggle(cpuRunning);
     for(var i=1;i<=4;i++){
-      $('#op'+i).removeClass('op-popup');
+      $('#op'+i).removeClass('op-popup').removeClass('op_button_jQPush');
     }
+    cpuRunning = toggle(cpuRunning);
   },1050);
 })

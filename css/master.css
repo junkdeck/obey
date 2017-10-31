@@ -117,6 +117,12 @@ html, body {
   animation: op_button_popup 1s 1;
   animation-fill-mode: backwards; }
 
+.obey-correct {
+  animation: obey_correct 500ms 1; }
+
+.obey-wrong {
+  animation: obey_wrong 500ms 1; }
+
 @keyframes op_button_popup {
   0% {
     top: 20px;
@@ -143,5 +149,25 @@ html, body {
     padding: 50px;
     margin: 0px;
     box-shadow: 0px 20px 0 0px #820333; } }
+@keyframes obey_correct {
+  0% {
+    background: #F07D37;
+    box-shadow: #cb560f; }
+  35% {
+    background: #90b40d;
+    box-shadow: 0 20px 0 0 #576c08; }
+  100% {
+    background: #F07D37;
+    box-shadow: #cb560f; } }
+@keyframes obey_wrong {
+  0% {
+    background: #F07D37;
+    box-shadow: #cb560f; }
+  35% {
+    background: #9c0c35;
+    box-shadow: 0 20px 0 0 #6c0825; }
+  100% {
+    background: #F07D37;
+    box-shadow: #cb560f; } }
 
 /*# sourceMappingURL=master.css.map */

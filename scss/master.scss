@@ -3,6 +3,7 @@ $secondaryColor: #540032;
 $tertiaryColor: #820333;
 $highlightColor: #C9283E;
 $specularColor: #F07D37;
+$obeyShadow: darken($specularColor,15%);
 
 @mixin color_keys($animationName, $color){
 	@keyframes #{$animationName}{
@@ -125,14 +126,14 @@ html,body{
 
 	background:$specularColor;
 	color: $secondaryColor;
-	box-shadow: 0 20px 0 0 darken($specularColor,15%);
+	box-shadow: 0 20px 0 0 $obeyShadow;
 
 	transition:35ms ease-in;
 }
 
 .obey:active{
 	top:20px;
-	box-shadow: 0 0px 0 0 darken($specularColor,15%);
+	box-shadow: 0 0px 0 0 $obeyShadow;
 }
 
 .flex-center{
@@ -142,7 +143,7 @@ html,body{
 }
 
 @include color_keys(cpu_push, $tertiaryColor);
-@include color_keys(cpu_obey_push, darken($specularColor,15%));
+@include color_keys(cpu_obey_push, $obeyShadow);
 
 .op_button_jQPush{
 	animation: cpu_push 175ms 1;
@@ -161,6 +162,13 @@ html,body{
 .op-popup{
 	animation: op_button_popup 1s 1;
 	animation-fill-mode: backwards;
+}
+
+.obey-correct{
+	animation: obey_correct 500ms 1;
+}
+.obey-wrong{
+	animation: obey_wrong 500ms 1;
 }
 
 @keyframes op_button_popup{
@@ -193,5 +201,35 @@ html,body{
 	padding:50px;
 	margin:0px;
 	box-shadow: 0px 20px 0 0px $tertiaryColor;
+	}
+}
+
+@keyframes obey_correct{
+	0%{
+		background: $specularColor;
+		box-shadow: $obeyShadow;
+	}
+	35%{
+		background: darken(adjust-hue($specularColor, 50%),20%);
+		box-shadow: 0 20px 0 0 darken(adjust-hue($obeyShadow, 50%),20%);
+	}
+	100%{
+		background: $specularColor;
+		box-shadow: $obeyShadow;
+	}
+}
+
+@keyframes obey_wrong{
+	0%{
+		background: $specularColor;
+		box-shadow: $obeyShadow;
+	}
+	35%{
+		background: darken(adjust-hue($specularColor, -40%),25%);
+		box-shadow: 0 20px 0 0 darken(adjust-hue($obeyShadow, -40%),20%);
+	}
+	100%{
+		background: $specularColor;
+		box-shadow: $obeyShadow;
 	}
 }
