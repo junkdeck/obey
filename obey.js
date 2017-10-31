@@ -100,10 +100,12 @@ function mainGameLoop(){
       $('#op_obey').removeClass('obey-correct').removeClass('obey-wrong');
       animationRetrigger("op_obey", "obey_button_jQPush");
       playSound(sfxObey);
+      $('#op_obey').empty().append("OBEY");
       step = 0; // reset step for next run
       cpuRunning = toggle(cpuRunning);  // toggles the game state
     } else{
       // sequence running
+      $('#op_obey').empty().append(beepSeq.length);
       animationRetrigger("op"+beepSeq[step], "op_button_jQPush");
       playSound(sfxOp[beepSeq[step]]);
       console.log("current step: "+(step)+" / sequence: "+beepSeq[step]);
@@ -116,7 +118,7 @@ function mainGameLoop(){
     if(beepSeq.length >= maxSequenceLength && roundWon){
       // final round played and won, notify player of victory
       playSound(sfxVictory);
-      console.log("YOU WIN!!!");
+      $('#op_obey').empty().append("WIN");
       // reinitialize all values for new game
       userIsDone = 0;
       beepSeq = [];
@@ -152,11 +154,11 @@ var gameLoopInterval = setInterval(mainGameLoop,750);  // run the game loop ever
 
 $(document).on('mousedown', '.op_button', function(){
   // checks what button the user clicked
-  let userValue = parseInt($(this).attr('id')[2],10);
-  playSound(sfxOp[userValue]);
   // detects the dynamically generated elements from animation retrigger
   if(gameStarted && !cpuRunning){
     // only register presses if the game's actually in progress AND it's the users turn
+    let userValue = parseInt($(this).attr('id')[2],10);
+    playSound(sfxOp[userValue]);
     addToSeq(userSeq, userValue);
     if(userSeq.length == beepSeq.length){
       console.log("user sequence: "+userSeq);
@@ -166,11 +168,13 @@ $(document).on('mousedown', '.op_button', function(){
         // tiny little timeout so the two sounds dont play on top of each other
         if(compareSeq(beepSeq, userSeq)){
           playSound(sfxCorrect);
+          $('#op_obey').empty().append("&check;");
           animationRetrigger("op_obey", "obey-correct");
           roundWon = 1;
           console.log("CORRECT SEQUENCE");
         }else{
           playSound(sfxWrong);
+          $('#op_obey').empty().append("&#x2717;");
           animationRetrigger("op_obey", "obey-wrong");
           roundWon = 0;
           console.log("WRONG SEQUENCE");
@@ -181,7 +185,7 @@ $(document).on('mousedown', '.op_button', function(){
   }
 });
 
-$(document).on('click', '.obey', function(){
+$(document).on('click', '.mainbutton', function(){
   // starts the game
   if(!gameStarted){
     for (var i = 1; i <= 4; i++) {
