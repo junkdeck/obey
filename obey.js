@@ -82,7 +82,7 @@ function animationRetrigger(elm_selector, anim){
   var newElm = elm.cloneNode(true);
   elm.parentNode.replaceChild(newElm,elm);
   // triggers animation on corresponding entry in sequence
-  $("#"+elm_selector).addClass(anim);  // "op_button_jQPush"
+  $("#"+elm_selector).addClass(anim);
 }
 
 function mainGameLoop(){
@@ -96,6 +96,8 @@ function mainGameLoop(){
     }
     if(step >= beepSeq.length){
       // checks if the sequence is ended
+      // removes both feedback classes to ensure only the 'push' anim is played
+      $('#op_obey').removeClass('obey-correct').removeClass('obey-wrong');
       animationRetrigger("op_obey", "obey_button_jQPush");
       playSound(sfxObey);
       step = 0; // reset step for next run
@@ -134,9 +136,10 @@ function mainGameLoop(){
     // play the round, regardless of previous round outcome
     console.log("EMPTYING USER SEQUENCE");
     userSeq = []; // empty user sequence for next round
+    console.log("TOGGLING GAME STATE");
     setTimeout(function(){
       // adds a little delay so you don't miss the first step of next sequence
-      console.log("TOGGLING GAME STATE");
+      console.log("GAMESTATE TOGGLED!");
       cpuRunning = toggle(cpuRunning);
       roundWon = 0;
     }, 200);
@@ -163,10 +166,12 @@ $(document).on('mousedown', '.op_button', function(){
         // tiny little timeout so the two sounds dont play on top of each other
         if(compareSeq(beepSeq, userSeq)){
           playSound(sfxCorrect);
+          animationRetrigger("op_obey", "obey-correct");
           roundWon = 1;
           console.log("CORRECT SEQUENCE");
         }else{
           playSound(sfxWrong);
+          animationRetrigger("op_obey", "obey-wrong");
           roundWon = 0;
           console.log("WRONG SEQUENCE");
         }

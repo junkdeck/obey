@@ -168,7 +168,7 @@ html,body{
 	animation: obey_correct 500ms 1;
 }
 .obey-wrong{
-	animation: obey_wrong 500ms 1;
+	animation: obey_wrong 750ms 1;
 }
 
 @keyframes op_button_popup{
@@ -207,7 +207,7 @@ html,body{
 @keyframes obey_correct{
 	0%{
 		background: $specularColor;
-		box-shadow: $obeyShadow;
+		box-shadow: 0 20px 0 0 $obeyShadow;
 	}
 	35%{
 		background: darken(adjust-hue($specularColor, 50%),20%);
@@ -215,21 +215,25 @@ html,body{
 	}
 	100%{
 		background: $specularColor;
-		box-shadow: $obeyShadow;
+		box-shadow: 0 20px 0 0 $obeyShadow;
 	}
 }
 
 @keyframes obey_wrong{
 	0%{
 		background: $specularColor;
-		box-shadow: $obeyShadow;
+		box-shadow: 0 20px 0 0 $obeyShadow;
 	}
-	35%{
-		background: darken(adjust-hue($specularColor, -40%),25%);
-		box-shadow: 0 20px 0 0 darken(adjust-hue($obeyShadow, -40%),20%);
+	15%{
+		background: darken(adjust-hue($specularColor, -25%),10%);
+		box-shadow: 0 20px 0 0 darken(adjust-hue($obeyShadow, -25%),5%);
+	}
+	65%{
+		background: darken(adjust-hue($specularColor, -30%),25%);
+		box-shadow: 0 20px 0 0 darken(adjust-hue($obeyShadow, -30%),20%);
 	}
 	100%{
 		background: $specularColor;
-		box-shadow: $obeyShadow;
+		box-shadow: 0 20px 0 0 $obeyShadow;
 	}
 }
