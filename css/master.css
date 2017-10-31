@@ -37,13 +37,13 @@ html, body {
 .row {
   width: 100%; }
 
-.row .op_button {
-  height: 20px;
-  width: 20px;
-  padding: 50px; }
-
 .op_button {
+  display: flex;
+  flex: 0 0 20px;
   position: relative;
+  overflow: hidden;
+  height: 20px;
+  padding: 50px;
   background: #C9283E;
   color: #540032;
   font-size: 24pt;
@@ -102,12 +102,46 @@ html, body {
   100% {
     top: 0px;
     box-shadow: 0px 20px 0 0px #cb560f; } }
-.op_button_jQActive {
+.op_button_jQPush {
   animation: cpu_push 175ms 1;
   animation-timing-function: ease-out; }
 
-.obey_button_jQActive {
+.obey_button_jQPush {
   animation: cpu_obey_push 175ms 1;
   animation-timing-function: ease-in; }
+
+.no-show {
+  opacity: 0; }
+
+.op-popup {
+  animation: op_button_popup 1s 1;
+  animation-fill-mode: backwards; }
+
+@keyframes op_button_popup {
+  0% {
+    top: 20px;
+    height: 0px;
+    padding: 0;
+    margin: 60px;
+    opacity: 1;
+    box-shadow: 0px 0px 0 0px #820333; }
+  50% {
+    top: 20px;
+    height: 5px;
+    padding: 0 50px;
+    margin: 57px 0;
+    box-shadow: 0px 0px 0 0px #820333; }
+  85% {
+    top: 20px;
+    height: 20px;
+    padding: 50px;
+    margin: 0px;
+    box-shadow: 0px 0px 0 0px #820333; }
+  100% {
+    top: 0;
+    height: 20px;
+    padding: 50px;
+    margin: 0px;
+    box-shadow: 0px 20px 0 0px #820333; } }
 
 /*# sourceMappingURL=master.css.map */

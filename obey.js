@@ -96,13 +96,13 @@ function mainGameLoop(){
     }
     if(step >= beepSeq.length){
       // checks if the sequence is ended
-      animationRetrigger("op_obey", "obey_button_jQActive");
+      animationRetrigger("op_obey", "obey_button_jQPush");
       playSound(sfxObey);
       step = 0; // reset step for next run
       cpuRunning = toggle(cpuRunning);  // toggles the game state
     } else{
       // sequence running
-      animationRetrigger("op"+beepSeq[step], "op_button_jQActive");
+      animationRetrigger("op"+beepSeq[step], "op_button_jQPush");
       playSound(sfxOp[beepSeq[step]]);
       console.log("current step: "+(step)+" / sequence: "+beepSeq[step]);
       step++;
@@ -178,6 +178,14 @@ $(document).on('mousedown', '.op_button', function(){
 
 $(document).on('click', '.obey', function(){
   // starts the game
+  for(var i=1;i<=4;i++){
+    $('#op'+i).removeClass('no-show').addClass('op-popup');
+  }
   $(this).empty().append("OBEY");
-  cpuRunning = toggle(cpuRunning);
+  setTimeout(function(){
+    cpuRunning = toggle(cpuRunning);
+    for(var i=1;i<=4;i++){
+      $('#op'+i).removeClass('op-popup');
+    }
+  },1050);
 })
