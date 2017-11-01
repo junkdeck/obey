@@ -1,6 +1,6 @@
 # obey
 
-uses JavaScript and jQuery Slim.
+uses JavaScript, jQuery Slim and SCSS.
 
 There's sound, but I've turned the volume down a fair bit. It's just for flair, so if you don't have sound enabled you aren't missing out on anything super vital.
 
