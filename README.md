@@ -7,10 +7,10 @@ uses JavaScript and jQuery Slim.
 
 ## instructions:
 
-press the buttons in the same sequence as the cpu. if you mess up, it'll play the same sequence again.
+* press the buttons in the same sequence as the cpu. if you mess up, it'll play the same sequence again.
 
-strict mode gives you 'one life'. mess up and you have to start all over on a new sequence.
+* strict mode gives you 'one life'. mess up and you have to start all over on a new sequence.
 
-click 'obey' during gameplay to reset the game and start over.
+* click 'obey' during gameplay to reset the game and start over.
 
-victory is achieved after 20 rounds of arduous, mentally exhausting Memorization Action
+* victory is achieved after 20 rounds of arduous, mentally exhausting Memorization Action
