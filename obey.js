@@ -1,7 +1,10 @@
 // SOUND SETUP
+var sfxBoot = document.createElement('audio');
+var sfxStop = document.createElement('audio');
 var sfxCorrect = document.createElement('audio');
 var sfxWrong = document.createElement('audio');
 var sfxVictory = document.createElement('audio');
+var sfxStrictLose = document.createElement('audio');
 var sfxObey = document.createElement('audio');
 var sfxOp = [];
 sfxOp[1] = document.createElement('audio');
@@ -9,31 +12,38 @@ sfxOp[2] = document.createElement('audio');
 sfxOp[3] = document.createElement('audio');
 sfxOp[4] = document.createElement('audio');
 // SFX LOADING
+sfxBoot.setAttribute('src','./sfx/sfxBoot.wav');
+sfxStop.setAttribute('src','./sfx/sfxStop.wav');
 sfxCorrect.setAttribute('src','./sfx/sfxCorrect.wav');
 sfxWrong.setAttribute('src','./sfx/sfxWrong.wav');
 sfxVictory.setAttribute('src','./sfx/sfxVictory.wav');
+sfxStrictLose.setAttribute('src','./sfx/sfxStrictLose.wav');
 sfxObey.setAttribute('src','./sfx/sfxObey.wav');
 sfxOp[1].setAttribute('src','./sfx/sfxOp1.wav');
 sfxOp[2].setAttribute('src','./sfx/sfxOp2.wav');
 sfxOp[3].setAttribute('src','./sfx/sfxOp3.wav');
 sfxOp[4].setAttribute('src','./sfx/sfxOp4.wav');
+sfxBoot.setAttribute('preload','auto');
+sfxStop.setAttribute('preload','auto');
 sfxCorrect.setAttribute('preload','auto');
 sfxWrong.setAttribute('preload','auto');
 sfxVictory.setAttribute('preload','auto');
+sfxStrictLose.setAttribute('preload','auto');
 sfxObey.setAttribute('preload','auto');
 sfxOp[1].setAttribute('preload','auto');
 sfxOp[2].setAttribute('preload','auto');
 sfxOp[3].setAttribute('preload','auto');
 sfxOp[4].setAttribute('preload','auto');
 // SFX VOLUME
-sfxCorrect.volume = 0.2;
-sfxWrong.volume   = 0.2;
-sfxVictory.volume = 0.2;
-sfxObey.volume    = 0.2;
-sfxOp[1].volume   = 0.2;
-sfxOp[2].volume   = 0.2;
-sfxOp[3].volume   = 0.2;
-sfxOp[4].volume   = 0.2;
+sfxCorrect.volume     = 0.2;
+sfxWrong.volume       = 0.2;
+sfxVictory.volume     = 0.2;
+sfxStrictLose.volume  = 0.2
+sfxObey.volume        = 0.2;
+sfxOp[1].volume       = 0.2;
+sfxOp[2].volume       = 0.2;
+sfxOp[3].volume       = 0.2;
+sfxOp[4].volume       = 0.2;
 
 var maxSequenceLength = 20; // the upper limit and what decides a win
 var beepSeq = []; // array holding sequence steps
@@ -93,6 +103,22 @@ function animationRetrigger(elm_selector, anim){
   $("#"+elm_selector).addClass(anim);
 }
 
+function startGame(){
+  for (var i = 1; i <= 4; i++) {
+    // enables the boot animation for all 'op_button's
+    $('#op'+i).removeClass('no-show').removeClass('op-popdown')
+    animationRetrigger(("op"+i), 'op-popup');
+  }
+  $('#op_obey').empty().append("BOOT");
+  setTimeout(function(){
+    for(var j=1;j<=4;j++){
+      // preps all 'op_button's for their animation retriggering
+      $('#op'+j).removeClass('op-popup').removeClass('op_button_jQPush');
+    }
+    cpuRunning = 1; // initiates the first cycle
+  },1300);
+}
+
 function mainGameLoop(){
   // main game loop
   if(cpuRunning){
@@ -105,7 +131,7 @@ function mainGameLoop(){
     if(step >= beepSeq.length){
       // checks if the sequence is ended
       // removes both feedback classes to ensure only the 'push' anim is played
-      $('#op_obey').removeClass('obey-correct').removeClass('obey-wrong');
+      $('#op_obey').removeClass('obey-correct').removeClass('obey-wrong').removeClass('obey-wrong-strict');
       animationRetrigger("op_obey", "obey_button_jQPush");
       playSound(sfxObey);
       $('#op_obey').empty().append("OBEY");
@@ -182,9 +208,14 @@ $(document).on('mousedown', '.op_button', function(){
           roundWon = 1;
           console.log("CORRECT SEQUENCE");
         }else{
-          playSound(sfxWrong);
+          if(strictMode){
+            playSound(sfxStrictLose);
+            animationRetrigger("op_obey", "obey-wrong-strict");
+          }else{
+            playSound(sfxWrong);
+            animationRetrigger("op_obey", "obey-wrong");
+          }
           $('#op_obey').empty().append("&#x2717;");
-          animationRetrigger("op_obey", "obey-wrong");
           roundWon = 0;
           console.log("WRONG SEQUENCE");
         }
@@ -197,20 +228,27 @@ $(document).on('mousedown', '.op_button', function(){
 $(document).on('click', '.obey', function(){
   // starts the game
   if(!gameStarted){
-    for (var i = 1; i <= 4; i++) {
-      // enables the boot animation for all 'op_button's
-      $('#op'+i).removeClass('no-show').removeClass('op-popdown')
-      animationRetrigger(("op"+i), 'op-popup');
-    }
-    $(this).empty().append("BOOT");
-    setTimeout(function(){
-      for(var j=1;j<=4;j++){
-        // preps all 'op_button's for their animation retriggering
-        $('#op'+j).removeClass('op-popup').removeClass('op_button_jQPush');
-      }
-      cpuRunning = 1; // initiates the first cycle
-    },1300);
+    startGame();
   }else if(!cpuRunning){
     initGameValues();
+    $('#op_obey').empty().append("RESET");
+    for (var i = 1; i <= 4; i++) {
+      // remove play buttons
+      $('#op'+i).removeClass('op-popup').addClass('op-popdown');
+    }
+    setTimeout(startGame,1300);
   }
-})
+});
+
+$(document).on('click', '.strict-select', function(){
+  strictMode = toggle(strictMode);
+  if(strictMode){
+    $('.stricter').html('strict!');
+  }else{
+    $('.stricter').html('strict?');
+  }
+});
+
+$('.junq, .junq-lash').on('click',function(){
+  window.open('https://github.com/junkdeck/','_blank');
+});

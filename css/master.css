@@ -22,11 +22,24 @@ html, body {
   flex-direction: column;
   background: #540032; }
 
-.title {
+.top-header {
   position: absolute;
   top: 0;
   left: 0;
   margin: 0 0 0 10%;
+  flex-direction: column; }
+
+.strict-select {
+  top: 100%;
+  right: 10%;
+  width: 97%;
+  text-align: left; }
+  .strict-select .stricter {
+    display: block;
+    cursor: pointer;
+    color: #2E112D; }
+
+.title {
   font-size: 48pt;
   color: #2E112D; }
 
@@ -69,7 +82,6 @@ html, body {
   transition: 35ms ease-in;
   top: 0px;
   box-shadow: 0px 20px 0 0px #820333;
-  cursor: hand;
   cursor: pointer; }
 
 .op_button:active {
@@ -93,7 +105,6 @@ html, body {
   color: #540032;
   box-shadow: 0 20px 0 0 #cb560f;
   transition: 35ms ease-in;
-  cursor: hand;
   cursor: pointer; }
 
 .obey:active {
@@ -158,6 +169,9 @@ html, body {
 .obey-wrong {
   animation: obey_wrong 750ms 1; }
 
+.obey-wrong-strict {
+  animation: obey_wrong_strict 500ms 1; }
+
 @keyframes op_button_popup {
   0% {
     top: 20px;
@@ -207,5 +221,82 @@ html, body {
   100% {
     background: #F07D37;
     box-shadow: 0 20px 0 0 #cb560f; } }
+@keyframes obey_wrong_strict {
+  0% {
+    background: #F07D37;
+    box-shadow: 0 20px 0 0 #cb560f; }
+  5% {
+    background: #9c0c1d;
+    box-shadow: 0 20px 0 0 #6c0814; }
+  50% {
+    background: #9c0c1d;
+    box-shadow: 0 20px 0 0 #6c0814; }
+  100% {
+    background: #F07D37;
+    box-shadow: 0 20px 0 0 #cb560f; } }
+.junq {
+  width: 0;
+  height: 0;
+  border-left: solid 35px transparent;
+  border-right: solid 35px transparent;
+  border-bottom: solid 60px #540032;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+  cursor: hand; }
+
+.junq::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: #2E112D;
+  position: relative;
+  right: 10px;
+  bottom: -25px;
+  border-radius: 80% 5%;
+  transform: rotate(45deg); }
+
+.junq::after {
+  content: '';
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: #540032;
+  position: relative;
+  border-radius: 50%;
+  right: 9px;
+  bottom: -1px; }
+
+.junq-lash {
+  position: absolute;
+  right: 44px;
+  bottom: 23px;
+  width: 2px;
+  height: 5px;
+  background: #2E112D; }
+
+.junq-lash::before {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 5px;
+  background: #2E112D;
+  position: relative;
+  right: 8px;
+  bottom: 2px;
+  transform: rotate(23deg); }
+
+.junq-lash::after {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 6px;
+  background: #2E112D;
+  position: relative;
+  right: -7px;
+  bottom: 7px;
+  transform: rotate(-23deg); }
 
 /*# sourceMappingURL=master.css.map */

@@ -55,14 +55,30 @@ html,body{
   background:$secondaryColor;
 }
 
-.title{
+.top-header{
 	position: absolute;
 	top:0;
 	left:0;
 	margin:0 0 0 10%;
 
-	font-size:48pt;
+	flex-direction: column;
+}
 
+.strict-select{
+	top:100%;
+	right:10%;
+	width:97%;
+	text-align:left;
+
+	.stricter{
+		display:block;
+		cursor:pointer;
+		color: $primaryColor;
+	}
+}
+
+.title{
+	font-size:48pt;
 	color:$primaryColor;
 }
 
@@ -117,7 +133,7 @@ html,body{
 
 	top:0px;
 	box-shadow: 0px 20px 0 0px $tertiaryColor;
-	cursor:hand;cursor:pointer;
+	cursor:pointer;
 }
 .op_button:active{
 	top:20px;
@@ -148,7 +164,7 @@ html,body{
 	box-shadow: 0 20px 0 0 $obeyShadow;
 
 	transition:35ms ease-in;
-	cursor:hand;cursor:pointer;
+	cursor:pointer;
 }
 
 .obey:active{
@@ -195,6 +211,9 @@ html,body{
 }
 .obey-wrong{
 	animation: obey_wrong 750ms 1;
+}
+.obey-wrong-strict{
+	animation: obey_wrong_strict 500ms 1;
 }
 
 @keyframes op_button_popup{
@@ -262,4 +281,96 @@ html,body{
 		background: $specularColor;
 		box-shadow: 0 20px 0 0 $obeyShadow;
 	}
+}
+@keyframes obey_wrong_strict{
+	0%{
+		background: $specularColor;
+		box-shadow: 0 20px 0 0 $obeyShadow;
+	}
+	5%{
+		background: darken(adjust-hue($specularColor, -30%),25%);
+		box-shadow: 0 20px 0 0 darken(adjust-hue($obeyShadow, -30%),20%);
+	}
+	50%{
+		background: darken(adjust-hue($specularColor, -30%),25%);
+		box-shadow: 0 20px 0 0 darken(adjust-hue($obeyShadow, -30%),20%);
+	}
+	100%{
+		background: $specularColor;
+		box-shadow: 0 20px 0 0 $obeyShadow;
+	}
+}
+
+.junq{
+    width:0;
+    height:0;
+    border-left: solid 35px transparent;
+    border-right: solid 35px transparent;
+    border-bottom: solid 60px $secondaryColor;
+
+    position:absolute;
+    right:10px;
+    bottom:10px;
+
+    cursor:pointer;cursor:hand;
+}
+.junq::before{
+    content:'';
+    display:block;
+    width:20px;
+    height:20px;
+    background:$primaryColor;
+
+    position:relative;
+    right:10px;
+    bottom:-25px;
+
+    border-radius: 80% 5%;
+    transform:rotate(45deg);
+}
+.junq::after{
+    content:'';
+    display:block;
+    width:18px;
+    height:18px;
+    background:$secondaryColor;
+
+    position:relative;
+    border-radius:50%;
+
+    right:9px;
+    bottom:-1px;
+}
+.junq-lash{
+    position:absolute;
+    right:44px;
+    bottom:23px;
+    width:2px;
+    height:5px;
+
+    background:$primaryColor;
+}
+.junq-lash::before{
+    content:'';
+    display:block;
+    width:3px;
+    height:5px;
+    background:$primaryColor;
+
+    position:relative;
+    right:8px;
+    bottom:2px;
+    transform:rotate(23deg);
+}
+.junq-lash::after{
+    content:'';
+    display:block;
+    width:3px;
+    height:6px;
+    background:$primaryColor;
+
+    position:relative;
+    right:-7px;
+    bottom:7px;
+    transform:rotate(-23deg);
 }
