@@ -1,5 +1,6 @@
 # obey
-obey - a game of rote memorization (it's simon says)
+#### (it's simon says)
+- a game of rote memorization -
 
 uses JavaScript and jQuery Slim.
 
