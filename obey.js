@@ -35,6 +35,8 @@ sfxOp[2].setAttribute('preload','auto');
 sfxOp[3].setAttribute('preload','auto');
 sfxOp[4].setAttribute('preload','auto');
 // SFX VOLUME
+sfxBoot.volume        = 0.2;
+sfxStop.volume        = 0.2;
 sfxCorrect.volume     = 0.2;
 sfxWrong.volume       = 0.2;
 sfxVictory.volume     = 0.2;
@@ -45,7 +47,7 @@ sfxOp[2].volume       = 0.2;
 sfxOp[3].volume       = 0.2;
 sfxOp[4].volume       = 0.2;
 
-var maxSequenceLength = 20; // the upper limit and what decides a win
+var maxSequenceLength = 1; // the upper limit and what decides a win
 var beepSeq = []; // array holding sequence steps
 var userSeq = []; // array holding the user sequence answer
 var step = 0; // current step of array
@@ -104,6 +106,7 @@ function animationRetrigger(elm_selector, anim){
 }
 
 function startGame(){
+  playSound(sfxBoot);
   for (var i = 1; i <= 4; i++) {
     // enables the boot animation for all 'op_button's
     $('#op'+i).removeClass('no-show').removeClass('op-popdown')
@@ -231,12 +234,13 @@ $(document).on('click', '.obey', function(){
     startGame();
   }else if(!cpuRunning){
     initGameValues();
+    playSound(sfxStop);
     $('#op_obey').empty().append("RESET");
     for (var i = 1; i <= 4; i++) {
       // remove play buttons
       $('#op'+i).removeClass('op-popup').addClass('op-popdown');
     }
-    setTimeout(startGame,1300);
+    setTimeout(startGame,1350);
   }
 });
 
