@@ -47,7 +47,7 @@ sfxOp[2].volume       = 0.2;
 sfxOp[3].volume       = 0.2;
 sfxOp[4].volume       = 0.2;
 
-var maxSequenceLength = 1; // the upper limit and what decides a win
+var maxSequenceLength = 20; // the upper limit and what decides a win
 var beepSeq = []; // array holding sequence steps
 var userSeq = []; // array holding the user sequence answer
 var step = 0; // current step of array
