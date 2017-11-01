@@ -26,14 +26,14 @@ sfxOp[2].setAttribute('preload','auto');
 sfxOp[3].setAttribute('preload','auto');
 sfxOp[4].setAttribute('preload','auto');
 // SFX VOLUME
-sfxCorrect.volume = 0.15;
-sfxWrong.volume = 0.15;
-sfxVictory.volume = 0.15;
-sfxObey.volume = 0.15;
-sfxOp[1].volume = 0.15;
-sfxOp[2].volume = 0.15;
-sfxOp[3].volume = 0.15;
-sfxOp[4].volume = 0.15;
+sfxCorrect.volume = 0.2;
+sfxWrong.volume   = 0.2;
+sfxVictory.volume = 0.2;
+sfxObey.volume    = 0.2;
+sfxOp[1].volume   = 0.2;
+sfxOp[2].volume   = 0.2;
+sfxOp[3].volume   = 0.2;
+sfxOp[4].volume   = 0.2;
 
 var maxSequenceLength = 20; // the upper limit and what decides a win
 var beepSeq = []; // array holding sequence steps
@@ -76,6 +76,14 @@ function getRandInt(min,max){
   return i;
 }
 
+function initGameValues(){
+  userIsDone = 0;
+  beepSeq = [];
+  userSeq = [];
+  cpuRunning = 0;
+  gameStarted = 0;
+}
+
 function animationRetrigger(elm_selector, anim){
   // setup for animation retrigger
   var elm = document.getElementById(elm_selector);  // "op"+beepSeq[step]
@@ -90,7 +98,7 @@ function mainGameLoop(){
   if(cpuRunning){
     if(!gameStarted){
       // start a new sequence when game is started for the first time
-      addToSeq(beepSeq,getRandInt(0,3)+1);
+      addToSeq(beepSeq,getRandInt(0,4)+1);
       console.log("initial seq: "+beepSeq);
       gameStarted = 1;
     }
@@ -124,12 +132,7 @@ function mainGameLoop(){
         $('#op'+i).removeClass('op-popup').addClass('op-popdown');
       }
       // reinitialize all values for new game
-      userIsDone = 0;
-      beepSeq = [];
-      userSeq = [];
-      cpuRunning = 0;
-      gameStarted = 0;
-
+      initGameValues();
       setTimeout(function(){$("#op_obey").empty().append('AGAIN');},1500);
       return 0;
     }else if(beepSeq.length < maxSequenceLength && roundWon){
@@ -139,7 +142,7 @@ function mainGameLoop(){
     }else if(!roundWon && strictMode){
       // start all over if 'strictMode' is active
       beepSeq = [];
-      addToSeq(beepSeq,getRandInt(0,3)+1);
+      addToSeq(beepSeq,getRandInt(0,4)+1);
     }
     // play the round, regardless of previous round outcome
     console.log("EMPTYING USER SEQUENCE");
@@ -191,7 +194,7 @@ $(document).on('mousedown', '.op_button', function(){
   }
 });
 
-$(document).on('click', '.mainbutton', function(){
+$(document).on('click', '.obey', function(){
   // starts the game
   if(!gameStarted){
     for (var i = 1; i <= 4; i++) {
@@ -201,12 +204,13 @@ $(document).on('click', '.mainbutton', function(){
     }
     $(this).empty().append("BOOT");
     setTimeout(function(){
-      for(var i=1;i<=4;i++){
+      for(var j=1;j<=4;j++){
         // preps all 'op_button's for their animation retriggering
-        $('#op'+i).removeClass('op-popup').removeClass('op_button_jQPush');
+        $('#op'+j).removeClass('op-popup').removeClass('op_button_jQPush');
       }
       cpuRunning = 1; // initiates the first cycle
     },1300);
+  }else if(!cpuRunning){
+    initGameValues();
   }
-
 })

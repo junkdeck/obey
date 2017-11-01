@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand:300,700");
 ::selection {
   background: transparent; }
 
@@ -7,7 +8,8 @@
 * {
   margin: 0;
   padding: 0;
-  cursor: default; }
+  cursor: default;
+  font-family: Quicksand, sans-serif; }
 
 html, body {
   height: 100%;
@@ -17,7 +19,16 @@ html, body {
   margin: auto;
   height: 100%;
   width: 80%;
+  flex-direction: column;
   background: #540032; }
+
+.title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0 0 0 10%;
+  font-size: 48pt;
+  color: #2E112D; }
 
 .playfield {
   display: block;
@@ -54,10 +65,12 @@ html, body {
   background: #C9283E;
   color: #540032;
   font-size: 24pt;
-  font-weight: bold;
+  font-weight: 700;
   transition: 35ms ease-in;
   top: 0px;
-  box-shadow: 0px 20px 0 0px #820333; }
+  box-shadow: 0px 20px 0 0px #820333;
+  cursor: hand;
+  cursor: pointer; }
 
 .op_button:active {
   top: 20px;
@@ -67,7 +80,8 @@ html, body {
   position: relative;
   top: 0;
   font-size: 36pt;
-  font-family: monospace;
+  font-weight: 700;
+  letter-spacing: -3px;
   overflow: hidden;
   border-radius: 50%;
   flex: 0 0 20px;
@@ -78,7 +92,9 @@ html, body {
   background: #F07D37;
   color: #540032;
   box-shadow: 0 20px 0 0 #cb560f;
-  transition: 35ms ease-in; }
+  transition: 35ms ease-in;
+  cursor: hand;
+  cursor: pointer; }
 
 .obey:active {
   top: 20px;
@@ -124,6 +140,7 @@ html, body {
   animation-timing-function: ease-in; }
 
 .no-show {
+  cursor: default;
   opacity: 0; }
 
 .op-popup {
