@@ -1,10 +1,8 @@
 # obey
-#### (it's simon says)
-- a game of rote memorization -
 
 uses JavaScript and jQuery Slim.
 
- There's sound, but I've turned the volume down a fair bit. It's just for flair, so if you don't have sound enabled you aren't missing out on anything super vital.
+There's sound, but I've turned the volume down a fair bit. It's just for flair, so if you don't have sound enabled you aren't missing out on anything super vital.
 
 ## instructions:
 
